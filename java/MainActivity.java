@@ -6,9 +6,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -16,8 +14,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +26,11 @@ public class MainActivity extends Activity {
 
 	Button btnSummary, btnLoad;
 	TextView mtext;
-	CharSequence[] items = {"txt","doc","html"};
+	CharSequence[] items = {"탐색기","웹페이지"};
 	private String filePath;
 	
 	String beforeSummary, afterSummary = "요약하기!";
+	boolean btnSummaryOn = false;
 
 
 	@Override
@@ -51,9 +53,16 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			  if (v.getId() == R.id.btnSummary){
 				  // 요약하기
-				  WSummary.SummaryCheck(afterSummary);
-				  mtext.setText(afterSummary);
-
+				  if(btnSummaryOn){
+					  mtext.setText(beforeSummary);
+					  btnSummary.setText("요약하기");
+				  }
+				  else{
+					  WSummary.SummaryCheck(afterSummary);
+					  mtext.setText(afterSummary);
+					  btnSummary.setText("원문보기");
+				  }
+				  btnSummaryOn = !btnSummaryOn;
 				  
 			  }else if(v.getId() == R.id.btnLoad){
 				  new AlertDialog.Builder(MainActivity.this).setTitle("선택하세요")
@@ -61,21 +70,42 @@ public class MainActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int item) {
 						// TODO Auto-generated method stub
-						 Toast.makeText(getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
-						 if(items[item] == "txt")
+						 if(items[item] == "탐색기")
 							 onTXTRead();
-						 if(items[item] == "doc")
-							 onDOCRead();
-						 if(items[item] == "html")
-							 onHtmlRead();
+						 if(items[item] == "웹페이지"){
+							 LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+							 View layout = inflater.inflate(R.layout.html_dialog, (ViewGroup)findViewById(R.id.htmlLayout));
+							 final EditText htmlEdit = (EditText)layout.findViewById(R.id.htmlEdit);
+							 
+							 new AlertDialog.Builder(MainActivity.this).setTitle("웹페이지")
+							 .setView(layout).setPositiveButton("확인", new DialogInterface.OnClickListener(){
+
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									// TODO Auto-generated method stub
+									onHtmlRead(htmlEdit.getText().toString());
+								}
+								 
+							 }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									// TODO Auto-generated method stub
+									
+								}
+							}).show();
+						 }
 					}
 				}).show();
 			  }
 		}
 	};
 	
-	public void onHtmlRead(){
-		String str = WHtmlConverter.DownloadHtml("http://m.sports.naver.com/worldfootball/news/read.nhn?oid=402&aid=0000000228");
+	public void onHtmlRead(String addr){
+		String mAddr = addr;
+		String str = WHtmlConverter.DownloadHtml(mAddr);
+		str = WHtmlConverter.OrderSentence(mAddr, str);
 		mtext.setText(str);
 	}
 	
