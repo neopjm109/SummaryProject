@@ -1,4 +1,4 @@
-package com.example.summaryproejct;
+package com.example.summaryproject;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;

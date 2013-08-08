@@ -1,4 +1,4 @@
-package com.example.summaryproejct;
+package com.example.summaryproject;
 
 public class WSummary {
 	// 아래 함수처럼 static을 꼭 넣어주세요. 생성 안시키고 바로 함수를 이용할 수 있도록
