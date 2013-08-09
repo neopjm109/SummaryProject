@@ -32,47 +32,58 @@ public class WHtmlConverter {
 	private static final int DAUM_NEWS_SPORTS = 2017;
 	private static final int DAUM_NEWS_REALTIME = 2018;
 	private static final int DAUM_NEWS_ISSUE = 2019;
-
+	
+	// Download Html Variables
+	static String html, mAddr;
+	static StringBuffer content;
+	
+	//EraseTag Varaibles
+	static String result;
+	static boolean tagOn;
+	static ArrayList<Integer> tagIndices;
+	
+	//OrderSentence Variables
+	static String source;
+	
 	public static String DownloadHtml(String addr){
-		String source = "";
-		StringBuffer content = new StringBuffer();
-		
+		mAddr = addr;
+		content = new StringBuffer();
+
 		try{
-			URL url = new URL(addr);
+			URL url = new URL(mAddr);
 			InputStream is = url.openStream();
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
-			
+
 			String inStr = "";
 			while((inStr = br.readLine()) != null){
 				content.append(inStr + "\n");
 			}
 			
-			source = new String(content);
-			
 		}catch(Exception e){
 			
 		}
 		
-		return source;
+		html = new String(content);
+		return html;
 	}
 	
 	public static String EraseTag(String str){
-		String result = str, source = str;
-		boolean tagOn = false;
-		ArrayList<Integer> tagIndices = new ArrayList<Integer>();
+		result = str;
+		tagOn = false;
+		tagIndices = new ArrayList<Integer>();
 
 		// 俺青 贸府
 		result = result.replaceAll("<br />", "\n");
 		result = result.replaceAll("<br>", "\n");
 		
 		// tag 眉农
-		for(int i=0; i<source.length(); i++){
-			if(!tagOn && source.charAt(i) == '<'){
+		for(int i=0; i<result.length(); i++){
+			if(!tagOn && result.charAt(i) == '<'){
 				tagIndices.add(i);
 				tagOn = true;
 			}
-			if(tagOn && source.charAt(i) == '>'){
+			if(tagOn && result.charAt(i) == '>'){
 				tagIndices.add(i);
 				tagOn = false;
 			}
@@ -196,7 +207,7 @@ public class WHtmlConverter {
 			break;
 		}
 
-		String source = str, result="";
+		source = str;
 		boolean findArticleStart = false;
 		int ArticleStart=0, ArticleEnd=0;
 		String start="", end="";
@@ -252,12 +263,11 @@ public class WHtmlConverter {
 			}
 		}
 		
-		result = source.replace(source.substring(ArticleEnd, source.length()), "");
-		result = result.replace(result.substring(0, ArticleStart + start.length()), "");
+		source = source.replace(source.substring(ArticleEnd, source.length()), "");
+		source = source.replace(source.substring(0, ArticleStart + start.length()), "");
 
-		
-		result = WHtmlConverter.EraseTag(result);
-		
-		return result;
+		source = WHtmlConverter.EraseTag(source);
+		return source;
 	}
+
 }
