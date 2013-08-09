@@ -2,27 +2,32 @@ package com.example.summaryproject;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.text.method.ScrollingMovementMethod;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,10 +37,9 @@ public class MainActivity extends Activity {
 	private Button btnSummary, btnLoad, btnTextSizeUp, btnTextSizeDown;
 	private TextView mtext;
 	private CharSequence[] items = {"탐색기","웹페이지"};
-	private String filePath;
 	
 	// Variables
-	private String beforeSummary, afterSummary = "요약하기!";
+	private String beforeSummary="\n\n\n\n\n\n\n\n\n\n", afterSummary = "요약하기!";
 	private boolean btnSummaryOn = false;
 	private int textSizeCount = 0;
 
@@ -43,20 +47,20 @@ public class MainActivity extends Activity {
 	DownThread mThread;
 	private ProgressDialog mProgress;
 
+	String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		// 파일 절대경로
-		filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator;
-
 		// MainLayer UI
 		btnSummary = (Button)findViewById(R.id.btnSummary);
 		btnLoad = (Button)findViewById(R.id.btnLoad);
 		mtext = (TextView)findViewById(R.id.mtext);
 		btnSummary.setOnClickListener(listener);
 		btnLoad.setOnClickListener(listener);
-
+		mtext.setOnLongClickListener(mLongClickListener);
+		mtext.setMovementMethod(new ScrollingMovementMethod());
 		
 		LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout upLayer = (LinearLayout)inflater.inflate(R.layout.up_layer, null);
@@ -130,8 +134,10 @@ public class MainActivity extends Activity {
 				new AlertDialog.Builder(MainActivity.this).setTitle("선택하세요")
 				.setItems(items,new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) {
-						if(items[item] == "탐색기")
+						if(items[item] == "탐색기"){
+							// FileLoader
 							onTXTRead();
+						}
 						if(items[item] == "웹페이지"){
 							LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
 							LinearLayout layout = (LinearLayout)inflater.inflate(R.layout.html_dialog, null);
@@ -156,7 +162,35 @@ public class MainActivity extends Activity {
 			}
 		}
 	};
+	
+	View.OnLongClickListener mLongClickListener = new View.OnLongClickListener() {
+		
+		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+		public boolean onLongClick(View v) {
+			switch(v.getId()){
+			case R.id.mtext:
+				new AlertDialog.Builder(MainActivity.this).setTitle("붙여넣기")
+				.setItems(new String[]{"붙여넣기"}, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						ClipboardManager clipboard = (ClipboardManager)MainActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+						if(Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB){
+							ClipData clip = clipboard.getPrimaryClip();
+							beforeSummary = clip.getItemAt(0).coerceToText(getApplicationContext()).toString();
+							mtext.setText(beforeSummary);
+						}else{
+						}
+					}
+				}).show();
 
+				return true;
+			}
+			return false;
+		}
+    };
+    
 	// 탐색기
 	public void onTXTRead(){
 		final ArrayList<File> fileList = new ArrayList<File>();
@@ -190,6 +224,7 @@ public class MainActivity extends Activity {
 
 					beforeSummary = bodyText.toString();
 					mtext.setText(beforeSummary);
+					btnSummaryOn = false;
 				}catch(IOException e){
 					
 				}
@@ -201,7 +236,7 @@ public class MainActivity extends Activity {
 			}
 		}).show();
 	}
-	
+
 	// Html 불러올때 필요한 또다른 쓰레드
 	class DownThread extends Thread{
 		String mAddr;
@@ -228,12 +263,3 @@ public class MainActivity extends Activity {
 
 	}
 };
-
-// 폴더와 TXT만 받아오기
-class TXTFilter implements FileFilter{
-	public boolean accept(File file) {
-		if(file.getName().endsWith(".txt"))
-			return true;
-		return false;
-	}
-}
