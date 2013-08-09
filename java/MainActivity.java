@@ -176,12 +176,13 @@ public class MainActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						ClipboardManager clipboard = (ClipboardManager)MainActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
-						if(Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB){
-							ClipData clip = clipboard.getPrimaryClip();
-							beforeSummary = clip.getItemAt(0).coerceToText(getApplicationContext()).toString();
-							mtext.setText(beforeSummary);
-						}else{
-						}
+						
+						ClipData clip = clipboard.getPrimaryClip();
+						beforeSummary = clip.getItemAt(0).coerceToText(getApplicationContext()).toString();
+						mtext.setText(beforeSummary);
+					
+						btnSummaryOn = false;
+						btnSummary.setText("요약하기");
 					}
 				}).show();
 
