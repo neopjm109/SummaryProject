@@ -9,35 +9,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        >
-    <Button
-        android:id="@+id/btnSummary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="요약하기"
-        />
-    
-    <Button
-        android:id="@+id/btnLoad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="불러하기"
-        />
+	    >
+	    
+	    <Button
+	        android:id="@+id/btnSummary"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="요약하기"
+	        />
+	    
+	    <Button
+	        android:id="@+id/btnLoad"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:text="불러오기"
+	        />
     
     </LinearLayout>
-    
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-    
+       
     <TextView
         android:id="@+id/mtext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="15dp"
+        android:scrollbars="vertical"
+        />
     
-    </ScrollView>
-
 </LinearLayout>
