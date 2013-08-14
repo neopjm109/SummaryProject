@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 메인페이지 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/app"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
     android:layout_width="1dp"
     android:layout_height="1dp"
     android:layout_margin="2px"
@@ -9,18 +8,17 @@
     android:orientation="vertical"
     android:padding="2dp" >
 
+    <!--  Main -->
     <LinearLayout
-        android:id="@+id/tabBar"
+        android:id="@+id/index"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_gravity="center_vertical" >
+        android:gravity="center" >
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="0px"
-            android:padding="0px"
             android:src="@drawable/summary_logo" />
         
         <ImageView
@@ -32,5 +30,59 @@
             android:src="@drawable/summary_logo2" />
 
     </LinearLayout>
+    
+    <!--  Paste View -->
+    <LinearLayout
+        android:id="@+id/paste"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center" >
+    </LinearLayout>        
+    
+    <!--  FileLoader View -->
+    <LinearLayout
+        android:id="@+id/fileLoader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center" >
+    </LinearLayout>       
+    
+    <!--  Webpage View -->
+    <LinearLayout
+        android:id="@+id/webPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center" >
+    </LinearLayout>       
+    
+    <!--  Recent View -->
+    <LinearLayout
+        android:id="@+id/recent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center" >
+    </LinearLayout>       
+    
+    <!--  Storage View -->
+    <LinearLayout
+        android:id="@+id/storage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center" >
+    </LinearLayout>       
+    
+    <!--  Setting View -->
+    <LinearLayout
+        android:id="@+id/setting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center" >
+    </LinearLayout>       
 
-</LinearLayout>
+</FrameLayout>
