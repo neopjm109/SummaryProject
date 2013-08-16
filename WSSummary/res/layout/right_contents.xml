@@ -53,21 +53,77 @@
 		        android:scrollbars="vertical"
 		        android:text="내용입니다"
 		        android:textColor="#000000"
+		        android:textSize="15dp"
 		        />
 	        
 	    </LinearLayout>        
 	    
-	    <!--  FileLoader View -->
-	    <LinearLayout
-	        android:id="@+id/fileLoader"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:orientation="vertical"
-	        android:gravity="center" >
-	        
-	        
-	        
-	    </LinearLayout>       
+	    <!-- FileLoader View -->
+        <FrameLayout
+            android:id="@+id/fileLoader"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+	        android:layout_margin="10dp" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/load_title_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dip"
+                    android:layout_marginTop="5dip"
+                    android:gravity="center_horizontal"
+                    android:text="Select File to Load"
+                    android:textColor="#08C"
+                    android:textSize="25dip" >
+                </TextView>
+
+                <ListView
+                    android:id="@+id/load_file_listview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+                </ListView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/load_popup_base"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </FrameLayout>
+        
+        <!--  FileView -->
+		<LinearLayout
+            android:id="@+id/fileRead"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+	        android:layout_margin="10dp" >
+
+            <TextView
+                android:id="@+id/fileTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="제목입니다"
+                android:textColor="#000000"
+		        android:textSize="45dp" />
+
+            <TextView
+                android:id="@+id/fileContents"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:text="내용입니다"
+                android:textColor="#000000"
+		        android:textSize="15dp"
+		        />
+        </LinearLayout>
 	    
 	    <!--  Webpage View -->
 	    <LinearLayout
@@ -75,7 +131,8 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
-	        android:gravity="center" >
+	        android:gravity="center"
+	        android:layout_margin="10dp" >
 	                
 	        <TextView
 	            android:id="@+id/webTitle"
@@ -83,6 +140,7 @@
 		        android:layout_height="wrap_content"
 		        android:text="제목입니다"
 		        android:textColor="#000000"
+		        android:textSize="45dp"
 		        />
 	        <TextView
 	            android:id="@+id/webContents"
@@ -91,6 +149,7 @@
 		        android:scrollbars="vertical"
 		        android:text="내용입니다"
 		        android:textColor="#000000"
+		        android:textSize="15dp"
 		        />
 	    </LinearLayout>       
 	    
@@ -100,7 +159,8 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
-	        android:gravity="center" >
+	        android:gravity="center"
+	        android:layout_margin="10dp" >
 	    </LinearLayout>       
 	    
 	    <!--  Storage View -->
@@ -109,7 +169,8 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
-	        android:gravity="center" >
+	        android:gravity="center"
+	        android:layout_margin="10dp" >
 	    </LinearLayout>       
 	    
 	    <!--  Setting View -->
@@ -118,7 +179,8 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
-	        android:gravity="center" >
+	        android:gravity="center"
+	        android:layout_margin="10dp" >
 	    </LinearLayout>
 	    
 	    <!-- Up Layer -->
@@ -126,7 +188,8 @@
 	        android:id="@+id/upLayer"
 	        android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
-		    android:orientation="vertical" >
+		    android:orientation="vertical"
+	        android:layout_margin="10dp" >
 		
 		    <Button
 		        android:id="@+id/btnSummary"
@@ -141,14 +204,14 @@
 		    <LinearLayout
 		        android:id="@+id/upLayer"
 		        android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-			    android:gravity="right"
-				android:orientation="horizontal" >
+		        android:layout_height="wrap_content"
+		        android:gravity="right"
+		        android:orientation="horizontal" >
 				
 			    <Button
 			        android:id="@+id/btnTextSizeUp"
 			        android:layout_width="50dp"
-				    android:layout_height="wrap_content"
+			        android:layout_height="wrap_content"
 			        android:textSize="20dp"
 			        android:text="+"
 			        android:textColor="#000000"
@@ -157,7 +220,7 @@
 			    <Button
 			        android:id="@+id/btnTextSizeDown"
 			        android:layout_width="50dp"
-				    android:layout_height="wrap_content"
+			        android:layout_height="wrap_content"
 			        android:textSize="20dp"
 			        android:text="-"
 			        android:textColor="#000000"
