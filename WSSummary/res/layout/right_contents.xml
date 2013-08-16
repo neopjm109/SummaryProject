@@ -3,18 +3,18 @@
     android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="2px"
+    android:layout_margin="0dp"
+    android:padding="0dp"
     android:background="#FFFFFF"
-    android:orientation="vertical"
-    android:padding="2dp" >
+    android:orientation="horizontal" >
 
     <ImageView
         android:id="@+id/BtnSlide"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="0px"
-        android:padding="0px"
-        android:src="@drawable/summary_logo2" />
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:src="@drawable/menu1"
+        android:background="#775599CC" />
     
     <FrameLayout
         android:layout_width="match_parent"
@@ -43,7 +43,8 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
-	        android:gravity="center" >
+	        android:gravity="center"
+	        android:layout_margin="10dp" >
 	                
 	        <TextView
 	            android:id="@+id/pasteContents"
@@ -63,6 +64,9 @@
 	        android:layout_height="match_parent"
 	        android:orientation="vertical"
 	        android:gravity="center" >
+	        
+	        
+	        
 	    </LinearLayout>       
 	    
 	    <!--  Webpage View -->
@@ -116,6 +120,50 @@
 	        android:orientation="vertical"
 	        android:gravity="center" >
 	    </LinearLayout>
+	    
+	    <!-- Up Layer -->
+	    <LinearLayout
+	        android:id="@+id/upLayer"
+	        android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical" >
+		
+		    <Button
+		        android:id="@+id/btnSummary"
+		        android:layout_width="100dp"
+			    android:layout_height="wrap_content"
+		        android:layout_gravity="right"
+		        android:textSize="20dp"
+		        android:text="요약하기"
+		        android:textColor="#000000"
+		        android:alpha="0.5" />
+		    
+		    <LinearLayout
+		        android:id="@+id/upLayer"
+		        android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+			    android:gravity="right"
+				android:orientation="horizontal" >
+				
+			    <Button
+			        android:id="@+id/btnTextSizeUp"
+			        android:layout_width="50dp"
+				    android:layout_height="wrap_content"
+			        android:textSize="20dp"
+			        android:text="+"
+			        android:textColor="#000000"
+			        android:alpha="0.5" />
+			
+			    <Button
+			        android:id="@+id/btnTextSizeDown"
+			        android:layout_width="50dp"
+				    android:layout_height="wrap_content"
+			        android:textSize="20dp"
+			        android:text="-"
+			        android:textColor="#000000"
+			        android:alpha="0.5" />
+		    </LinearLayout>
+		</LinearLayout>
 	    
 	</FrameLayout>
 </LinearLayout>

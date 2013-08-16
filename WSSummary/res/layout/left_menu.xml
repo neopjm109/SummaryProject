@@ -2,7 +2,7 @@
 <!-- 움직이는 메뉴페이지 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/menu"
-    android:background="#006699"
+    android:background="#256CCC"
     android:orientation="vertical" >
 
     <ListView
