@@ -330,26 +330,26 @@ public class MainActivity extends Activity {
 						textSizeCount[1]--;
 					}
 				} else if (webPageOn) {
-					if (textSizeCount[2] < 3) {
+					if (textSizeCount[2] > 0) {
 						switch (textSizeCount[2]) {
-						case 0:
-							webContents.setTextSize(
-									TypedValue.COMPLEX_UNIT_DIP, 20);
-							break;
 						case 1:
 							webContents.setTextSize(
-									TypedValue.COMPLEX_UNIT_DIP, 25);
+									TypedValue.COMPLEX_UNIT_DIP, 15);
 							break;
 						case 2:
 							webContents.setTextSize(
-									TypedValue.COMPLEX_UNIT_DIP, 30);
+									TypedValue.COMPLEX_UNIT_DIP, 20);
+							break;
+						case 3:
+							webContents.setTextSize(
+									TypedValue.COMPLEX_UNIT_DIP, 25);
 							break;
 						default:
 							Toast.makeText(getApplicationContext(),
 									"더이상 늘일 수 없습니다.", Toast.LENGTH_SHORT);
 							break;
 						}
-						textSizeCount[2]++;
+						textSizeCount[2]--;
 					}
 				}
 				break;
