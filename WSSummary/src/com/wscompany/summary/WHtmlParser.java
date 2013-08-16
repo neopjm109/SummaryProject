@@ -59,7 +59,8 @@ public class WHtmlParser {
 			}
 		}
 		
-		title = title.substring(titleStart+1, titleEnd);
+		if(title.length() != 0)
+			title = title.substring(titleStart+1, titleEnd);
 		
 		return title;
 	}

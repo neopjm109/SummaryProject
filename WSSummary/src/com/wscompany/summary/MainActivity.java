@@ -3,9 +3,14 @@ package com.wscompany.summary;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,27 +18,23 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.wscompany.summary.MyHorizontalScrollView.SizeCallback;
 
-/**
- * This demo uses a custom HorizontalScrollView that ignores tosuch events, and therefore does NOT allow manual scrolling.
- * 
- * The only scrolling allowed is scrolling in code triggered by the menu button.
- * 
- * When the button is pressed, both the menu and the app will scroll. So the menu isn't revealed from beneath the app, it
- * adjoins the app and moves with the app.
- */
 public class MainActivity extends Activity {
 	
 	// Layout Variables //
     MyHorizontalScrollView scrollView;
     View menuView, contentsView;
+    ViewGroup indexView, pasteView, fileLoaderView, webPageView, recentView, storageView, settingView;
+    TextView pasteContents, webTitle, webContents;
     ListView menuListView;
+    LayoutInflater inflater;
     
     String [] menu_items = {"붙여넣기","파일탐색기","웹페이지","최근기록","보관함","설정"};
     ImageView btnSlide;
@@ -42,30 +43,55 @@ public class MainActivity extends Activity {
     Handler handler = new Handler();
     int btnWidth;
     
+    Context context;
+    
     // Summary Variables //
     private String beforeSummary = "", afterSummary ="", titleSummary = "";
     
-    // Webpage Variables //
+    // Paste Variables//    
 	DownThread mThread;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+    	
+    	context = getApplicationContext();
 
-        LayoutInflater inflater = LayoutInflater.from(this);
+    	inflater = (LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
         scrollView = (MyHorizontalScrollView) inflater.inflate(R.layout.activity_main, null);
         setContentView(scrollView);
 
+        // ViewGroup initialize
         menuView= inflater.inflate(R.layout.left_menu, null);
         contentsView = inflater.inflate(R.layout.right_contents, null);
-        ViewGroup tabBar = (ViewGroup) contentsView.findViewById(R.id.tabBar);
+        
+        indexView = (ViewGroup) contentsView.findViewById(R.id.index);
+        pasteView = (ViewGroup) contentsView.findViewById(R.id.paste);
+        fileLoaderView = (ViewGroup) contentsView.findViewById(R.id.fileLoader);
+        webPageView = (ViewGroup) contentsView.findViewById(R.id.webPage);
+        recentView = (ViewGroup) contentsView.findViewById(R.id.recent);
+        storageView = (ViewGroup) contentsView.findViewById(R.id.storage);
+        settingView = (ViewGroup) contentsView.findViewById(R.id.setting);
+        
+        // ViewGroup initialize
+        pasteContents = (TextView) pasteView.findViewById(R.id.pasteContents);
+        
+        webTitle = (TextView) webPageView.findViewById(R.id.webTitle);
+        webContents = (TextView) webPageView.findViewById(R.id.webContents);
+        
+        pasteView.setVisibility(View.INVISIBLE);
+        fileLoaderView.setVisibility(View.INVISIBLE);
+        webPageView.setVisibility(View.INVISIBLE);
+        recentView.setVisibility(View.INVISIBLE);
+        storageView.setVisibility(View.INVISIBLE);
+        settingView.setVisibility(View.INVISIBLE);
         
         // Menu
         menuListView = (ListView) menuView.findViewById(R.id.menuList);
         menuListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu_items));
         menuListView.setOnItemClickListener(itemListener);
                 
-        btnSlide = (ImageView) tabBar.findViewById(R.id.BtnSlide);
+        btnSlide = (ImageView) contentsView.findViewById(R.id.BtnSlide);
         btnSlide.setOnClickListener(new ClickListenerForScrolling(scrollView, menuView));
 
         final View[] children = new View[] { menuView, contentsView };
@@ -80,19 +106,54 @@ public class MainActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 			// TODO Auto-generated method stub
+			indexView.setVisibility(View.INVISIBLE);
+			pasteView.setVisibility(View.INVISIBLE);
+			fileLoaderView.setVisibility(View.INVISIBLE);
+			webPageView.setVisibility(View.INVISIBLE);
+			recentView.setVisibility(View.INVISIBLE);
+			storageView.setVisibility(View.INVISIBLE);
+			settingView.setVisibility(View.INVISIBLE);
+			
 			switch(pos){
 			case 0:	// 붙여넣기
+				pasteView.setVisibility(View.VISIBLE);
+				
+				ClipboardManager clipboard = (ClipboardManager)MainActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+				ClipData clip = clipboard.getPrimaryClip();
+				
+				beforeSummary = clip.getItemAt(0).coerceToText(getApplicationContext()).toString();
+				pasteContents.setText(beforeSummary);
 				
 				break;
 			case 1:	// 파일탐색기
+				fileLoaderView.setVisibility(View.VISIBLE);
 				break;
 			case 2:	// 웹페이지
+				View layout = inflater.inflate(R.layout.html_dialog, null);
+				final EditText htmlEdit = (EditText)layout.findViewById(R.id.htmlEdit);
+				webPageView.setVisibility(View.VISIBLE);
+				
+				new AlertDialog.Builder(MainActivity.this).setTitle("웹페이지")
+				.setView(layout).setPositiveButton("확인", new DialogInterface.OnClickListener(){
+					
+					public void onClick(DialogInterface dialog, int which) {
+						mThread = new DownThread(htmlEdit.getText().toString());
+						mThread.start();
+					}
+				}).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				}).show();
+				
 				break;
 			case 3:	// 최근기록
+				recentView.setVisibility(View.VISIBLE);
 				break;
 			case 4:	// 보관함
+				storageView.setVisibility(View.VISIBLE);
 				break;
 			case 5:	// 설정
+				settingView.setVisibility(View.VISIBLE);
 				break;
 			default:
 				break;
@@ -172,14 +233,14 @@ public class MainActivity extends Activity {
 		public void run(){
 			mResult = WHtmlParser.DownloadHtml(mAddr);
 			mAfterDown.sendEmptyMessage(0);
-		}		
+		}
 		Handler mAfterDown = new Handler(){
 			public void handleMessage(Message msg) {
 				beforeSummary = mThread.mResult;
 				titleSummary = WHtmlParser.GetTitle(beforeSummary);
 				afterSummary = WHtmlParser.RemoveTag(beforeSummary);
-//				text.setText(titleSummary+"\n\n"+afterSummary);
-//		    		mProgress.dismiss();
+				webTitle.setText(titleSummary);
+				webContents.setText(beforeSummary);
 	    	}
 		};
 	}

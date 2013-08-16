@@ -33,14 +33,6 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
         setVerticalFadingEdgeEnabled(false);
     }
 
-    /**
-     * @param children
-     *            The child Views to add to parent.
-     * @param scrollToViewIdx
-     *            The index of the View to scroll to after initialisation.
-     * @param sizeCallback
-     *            A SizeCallback to interact with the HSV.
-     */
     public void initViews(View[] children, int scrollToViewIdx, SizeCallback sizeCallback) {
         // A ViewGroup MUST be the only child of the HSV
         ViewGroup parent = (ViewGroup) getChildAt(0);
@@ -70,10 +62,6 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
         return false;
     }
 
-    /**
-     * An OnGlobalLayoutListener impl that passes on the call to onGlobalLayout to a SizeCallback, before removing all the Views
-     * in the HSV and adding them again with calculated widths and heights.
-     */
     class MyOnGlobalLayoutListener implements OnGlobalLayoutListener {
         ViewGroup parent;
         View[] children;
@@ -81,16 +69,6 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
         int scrollToViewPos = 0;
         SizeCallback sizeCallback;
 
-        /**
-         * @param parent
-         *            The parent to which the child Views should be added.
-         * @param children
-         *            The child Views to add to parent.
-         * @param scrollToViewIdx
-         *            The index of the View to scroll to after initialisation.
-         * @param sizeCallback
-         *            A SizeCallback to interact with the HSV.
-         */
         public MyOnGlobalLayoutListener(ViewGroup parent, View[] children, int scrollToViewIdx, SizeCallback sizeCallback) {
             this.parent = parent;
             this.children = children;
@@ -142,27 +120,10 @@ public class MyHorizontalScrollView extends HorizontalScrollView {
         }
     }
 
-    /**
-     * Callback interface to interact with the HSV.
-     */
     public interface SizeCallback {
-        /**
-         * Used to allow clients to measure Views before re-adding them.
-         */
+       
         public void onGlobalLayout();
 
-        /**
-         * Used by clients to specify the View dimensions.
-         * 
-         * @param idx
-         *            Index of the View.
-         * @param w
-         *            Width of the parent View.
-         * @param h
-         *            Height of the parent View.
-         * @param dims
-         *            dims[0] should be set to View width. dims[1] should be set to View height.
-         */
         public void getViewSize(int idx, int w, int h, int[] dims);
     }
 }

@@ -1,88 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/content"
-    android:layout_width="1dp"
-    android:layout_height="1dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_margin="2px"
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="2dp" >
 
-    <!--  Main -->
-    <LinearLayout
-        android:id="@+id/index"
+    <ImageView
+        android:id="@+id/BtnSlide"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center" >
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/summary_logo" />
-        
-        <ImageView
-            android:id="@+id/BtnSlide"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="0px"
-            android:padding="0px"
-            android:src="@drawable/summary_logo2" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_margin="0px"
+        android:padding="0px"
+        android:src="@drawable/summary_logo2" />
     
-    <!--  Paste View -->
-    <LinearLayout
-        android:id="@+id/paste"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center" >
-    </LinearLayout>        
-    
-    <!--  FileLoader View -->
-    <LinearLayout
-        android:id="@+id/fileLoader"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center" >
-    </LinearLayout>       
-    
-    <!--  Webpage View -->
-    <LinearLayout
-        android:id="@+id/webPage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center" >
-    </LinearLayout>       
-    
-    <!--  Recent View -->
-    <LinearLayout
-        android:id="@+id/recent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center" >
-    </LinearLayout>       
-    
-    <!--  Storage View -->
-    <LinearLayout
-        android:id="@+id/storage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center" >
-    </LinearLayout>       
-    
-    <!--  Setting View -->
-    <LinearLayout
-        android:id="@+id/setting"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center" >
-    </LinearLayout>       
-
-</FrameLayout>
+   		android:orientation="vertical"
+        >
+	    <!--  Main -->
+	    <LinearLayout
+	        android:id="@+id/index"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:gravity="center" >
+	
+	        <ImageView
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/summary_logo"
+	            />	        
+	
+	    </LinearLayout>
+	    
+	    <!--  Paste View -->
+	    <LinearLayout
+	        android:id="@+id/paste"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:gravity="center" >
+	                
+	        <TextView
+	            android:id="@+id/pasteContents"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:scrollbars="vertical"
+		        android:text="내용입니다"
+		        android:textColor="#000000"
+		        />
+	        
+	    </LinearLayout>        
+	    
+	    <!--  FileLoader View -->
+	    <LinearLayout
+	        android:id="@+id/fileLoader"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:gravity="center" >
+	    </LinearLayout>       
+	    
+	    <!--  Webpage View -->
+	    <LinearLayout
+	        android:id="@+id/webPage"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:gravity="center" >
+	                
+	        <TextView
+	            android:id="@+id/webTitle"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:text="제목입니다"
+		        android:textColor="#000000"
+		        />
+	        <TextView
+	            android:id="@+id/webContents"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:scrollbars="vertical"
+		        android:text="내용입니다"
+		        android:textColor="#000000"
+		        />
+	    </LinearLayout>       
+	    
+	    <!--  Recent View -->
+	    <LinearLayout
+	        android:id="@+id/recent"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:gravity="center" >
+	    </LinearLayout>       
+	    
+	    <!--  Storage View -->
+	    <LinearLayout
+	        android:id="@+id/storage"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:gravity="center" >
+	    </LinearLayout>       
+	    
+	    <!--  Setting View -->
+	    <LinearLayout
+	        android:id="@+id/setting"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical"
+	        android:gravity="center" >
+	    </LinearLayout>
+	    
+	</FrameLayout>
+</LinearLayout>
