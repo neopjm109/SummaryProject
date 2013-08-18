@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -154,12 +155,15 @@ public class MainActivity extends Activity {
 		upLayer = (ViewGroup) contentsView.findViewById(R.id.upLayer);
 
 		pasteContents = (TextView) pasteView.findViewById(R.id.pasteContents);
+		pasteContents.setMovementMethod(new ScrollingMovementMethod());
 
 		webTitle = (TextView) webPageView.findViewById(R.id.webTitle);
 		webContents = (TextView) webPageView.findViewById(R.id.webContents);
+		webContents.setMovementMethod(new ScrollingMovementMethod());
 
 		fileTitle = (TextView) fileView.findViewById(R.id.fileTitle);
 		fileContents = (TextView) fileView.findViewById(R.id.fileContents);
+		fileContents.setMovementMethod(new ScrollingMovementMethod());
 
 		summary = (Button) contentsView.findViewById(R.id.btnSummary);
 		summary.setOnClickListener(sumListener);
