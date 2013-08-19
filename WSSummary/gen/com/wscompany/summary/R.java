@@ -35,9 +35,9 @@ public final class R {
     public static final class id {
         public static final int BtnSlide=0x7f080008;
         public static final int action_settings=0x7f08001d;
-        public static final int btnSummary=0x7f080019;
-        public static final int btnTextSizeDown=0x7f08001b;
-        public static final int btnTextSizeUp=0x7f08001a;
+        public static final int btnSummary=0x7f08001a;
+        public static final int btnTextSizeDown=0x7f08001c;
+        public static final int btnTextSizeUp=0x7f08001b;
         public static final int content=0x7f080007;
         public static final int fileContents=0x7f080012;
         public static final int fileLoader=0x7f08000c;
@@ -56,10 +56,10 @@ public final class R {
         public static final int paste=0x7f08000a;
         public static final int pasteContents=0x7f08000b;
         public static final int recent=0x7f080016;
-        public static final int setting=0x7f08001c;
+        public static final int setting=0x7f080018;
         public static final int storage=0x7f080017;
         public static final int top=0x7f080000;
-        public static final int upLayer=0x7f080018;
+        public static final int upLayer=0x7f080019;
         public static final int webContents=0x7f080015;
         public static final int webPage=0x7f080013;
         public static final int webTitle=0x7f080014;
@@ -72,7 +72,6 @@ public final class R {
         public static final int load_file_list_item=0x7f030004;
         public static final int load_popup=0x7f030005;
         public static final int right_contents=0x7f030006;
-        public static final int up_layer=0x7f030007;
     }
     public static final class menu {
         public static final int main=0x7f070000;

@@ -121,7 +121,7 @@ public class MainActivity extends Activity {
 		scrollView = (MyHorizontalScrollView) inflater.inflate(
 				R.layout.activity_main, null);
 		setContentView(scrollView);
-
+		
 		// ViewGroup initialize
 		ViewGroupInit();
 		VisibilityInvisible();
@@ -767,30 +767,20 @@ public class MainActivity extends Activity {
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 				float velocityY) {
 			int menuWidth = 0;
-			int left = 0;
 			if(Math.abs(velocityX) > VELOCITY){
+				// 메뉴 넣기
 				if(e1.getX() - e2.getX() > DISTANCE){
 					menuWidth = menuView.getMeasuredWidth();
-					left = menuWidth;
 					btnSlide.setImageResource(R.drawable.menu1);
-					scrollView.smoothScrollTo(left, 0);
+					scrollView.smoothScrollTo(menuWidth, 0);
 				}
+				// 메뉴 꺼내기
 				if(e2.getX() - e1.getX() > DISTANCE){
 					// Ensure menu is visible
 					menuView.setVisibility(View.VISIBLE);
-
-					if (!menuOut) {
-						// Scroll to 0 to reveal menu
-						
-						btnSlide.setImageResource(R.drawable.menu0);
-						scrollView.smoothScrollTo(left, 0);
-					} else {
-						// Scroll to menuWidth so menu isn't on screen.
-						left = menuWidth;
-						btnSlide.setImageResource(R.drawable.menu1);
-						scrollView.smoothScrollTo(left, 0);
-					}
-					menuOut = !menuOut;
+					// Scroll to menuWidth so menu isn't on screen.
+					btnSlide.setImageResource(R.drawable.menu0);
+					scrollView.smoothScrollTo(menuWidth, 0);
 				}
 			}	
 			return false;

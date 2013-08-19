@@ -166,6 +166,14 @@
 	    </LinearLayout>       
 	    
 	    <!--  Setting View -->
+	    <LinearLayout
+	        android:id="@+id/setting"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_margin="10dp"
+	        android:gravity="center"
+	        android:orientation="vertical" >
+	    </LinearLayout>
 	    
 	    <!-- Up Layer -->
 	    <LinearLayout
@@ -211,15 +219,6 @@
 			        android:alpha="0.5" />
 		    </LinearLayout>
 		</LinearLayout>
-
-	    <LinearLayout
-	        android:id="@+id/setting"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:layout_margin="10dp"
-	        android:gravity="center"
-	        android:orientation="vertical" >
-	    </LinearLayout>
 	    
 	</FrameLayout>
 </LinearLayout>
