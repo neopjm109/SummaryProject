@@ -50,8 +50,6 @@
 	            android:id="@+id/pasteContents"
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
-		        android:scrollbars="vertical"
-		        android:text="내용입니다"
 		        android:textColor="#000000"
 		        android:textSize="15dp"
 		        />
@@ -110,7 +108,6 @@
                 android:id="@+id/fileTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="제목입니다"
                 android:textColor="#000000"
 		        android:textSize="45dp" />
 
@@ -118,8 +115,6 @@
                 android:id="@+id/fileContents"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                android:text="내용입니다"
                 android:textColor="#000000"
 		        android:textSize="15dp"
 		        />
@@ -138,7 +133,6 @@
 	            android:id="@+id/webTitle"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:text="제목입니다"
 		        android:textColor="#000000"
 		        android:textSize="45dp"
 		        />
@@ -146,8 +140,6 @@
 	            android:id="@+id/webContents"
 		        android:layout_width="match_parent"
 		        android:layout_height="match_parent"
-		        android:scrollbars="vertical"
-		        android:text="내용입니다"
 		        android:textColor="#000000"
 		        android:textSize="15dp"
 		        />
@@ -174,14 +166,6 @@
 	    </LinearLayout>       
 	    
 	    <!--  Setting View -->
-	    <LinearLayout
-	        android:id="@+id/setting"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:orientation="vertical"
-	        android:gravity="center"
-	        android:layout_margin="10dp" >
-	    </LinearLayout>
 	    
 	    <!-- Up Layer -->
 	    <LinearLayout
@@ -227,6 +211,15 @@
 			        android:alpha="0.5" />
 		    </LinearLayout>
 		</LinearLayout>
+
+	    <LinearLayout
+	        android:id="@+id/setting"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_margin="10dp"
+	        android:gravity="center"
+	        android:orientation="vertical" >
+	    </LinearLayout>
 	    
 	</FrameLayout>
 </LinearLayout>

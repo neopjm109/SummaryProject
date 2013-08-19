@@ -23,13 +23,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -164,12 +165,15 @@ public class MainActivity extends Activity {
 		upLayer = (ViewGroup) contentsView.findViewById(R.id.upLayer);
 
 		pasteContents = (TextView) pasteView.findViewById(R.id.pasteContents);
+		pasteContents.setMovementMethod(new ScrollingMovementMethod());
 
 		webTitle = (TextView) webPageView.findViewById(R.id.webTitle);
 		webContents = (TextView) webPageView.findViewById(R.id.webContents);
+		webContents.setMovementMethod(new ScrollingMovementMethod());
 
 		fileTitle = (TextView) fileView.findViewById(R.id.fileTitle);
 		fileContents = (TextView) fileView.findViewById(R.id.fileContents);
+		fileContents.setMovementMethod(new ScrollingMovementMethod());
 
 		summary = (Button) contentsView.findViewById(R.id.btnSummary);
 		summary.setOnClickListener(sumListener);
@@ -462,7 +466,8 @@ public class MainActivity extends Activity {
 									fileView.setVisibility(View.VISIBLE);
 									upLayer.setVisibility(View.VISIBLE);
 									fileViewOn = upLayerOn = true;
-									fileContents.setText(txt);
+									beforeSummary = txt;
+									fileContents.setText(beforeSummary);
 								}
 
 								else if (file.getName().contains(".doc") == true
@@ -487,7 +492,8 @@ public class MainActivity extends Activity {
 										fileView.setVisibility(View.VISIBLE);
 										upLayer.setVisibility(View.VISIBLE);
 										fileViewOn = upLayerOn = true;
-										fileContents.setText(txt);
+										beforeSummary = txt;
+										fileContents.setText(beforeSummary);
 									} catch (Exception exep) {
 									}
 								}
