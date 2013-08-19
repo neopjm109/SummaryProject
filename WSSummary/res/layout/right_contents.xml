@@ -95,55 +95,65 @@
             </LinearLayout>
         </FrameLayout>
         
-        <!--  FileView -->
-		<LinearLayout
+        <ScrollView
             android:id="@+id/fileRead"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-	        android:layout_margin="10dp" >
-
-            <TextView
-                android:id="@+id/fileTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#000000"
-		        android:textSize="45dp" />
-
-            <TextView
-                android:id="@+id/fileContents"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="#000000"
-		        android:textSize="15dp"
-		        />
-        </LinearLayout>
-	    
-	    <!--  Webpage View -->
-	    <LinearLayout
+            >
+	        <!--  FileView -->
+			<LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:gravity="center"
+	            android:orientation="vertical"
+		        android:layout_margin="10dp" >
+	
+	            <TextView
+	                android:id="@+id/fileTitle"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:textColor="#000000"
+			        android:textSize="40dp" />
+	
+	            <TextView
+	                android:id="@+id/fileContents"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:textColor="#000000"
+			        android:textSize="15dp"
+			        />
+	        </LinearLayout>
+        </ScrollView>
+        
+	    <ScrollView
 	        android:id="@+id/webPage"
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
-	        android:orientation="vertical"
-	        android:gravity="center"
-	        android:layout_margin="10dp" >
-	                
-	        <TextView
-	            android:id="@+id/webTitle"
+            >
+		    <!--  Webpage View -->
+		    <LinearLayout
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:textColor="#000000"
-		        android:textSize="45dp"
-		        />
-	        <TextView
-	            android:id="@+id/webContents"
-		        android:layout_width="match_parent"
-		        android:layout_height="match_parent"
-		        android:textColor="#000000"
-		        android:textSize="15dp"
-		        />
-	    </LinearLayout>       
+		        android:orientation="vertical"
+		        android:gravity="center"
+		        android:layout_margin="10dp" >
+		                
+		        <TextView
+		            android:id="@+id/webTitle"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:textColor="#000000"
+			        android:textSize="40dp"
+			        />
+		        <TextView
+		            android:id="@+id/webContents"
+			        android:layout_width="match_parent"
+			        android:layout_height="match_parent"
+			        android:textColor="#000000"
+			        android:textSize="15dp"
+			        />
+		    </LinearLayout>
+        </ScrollView>     
 	    
 	    <!--  Recent View -->
 	    <LinearLayout
@@ -175,49 +185,38 @@
 	        android:orientation="vertical" >
 	    </LinearLayout>
 	    
-	    <!-- Up Layer -->
+	    <!-- Btn Layer -->
 	    <LinearLayout
-	        android:id="@+id/upLayer"
+	        android:id="@+id/btnLayer"
 	        android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:orientation="vertical"
+		    android:layout_height="match_parent"
+		    android:gravity="bottom"
+		    android:orientation="horizontal"
 	        android:layout_margin="10dp" >
 		
 		    <Button
 		        android:id="@+id/btnSummary"
 		        android:layout_width="100dp"
 			    android:layout_height="wrap_content"
-		        android:layout_gravity="right"
 		        android:textSize="20dp"
 		        android:text="요약하기"
-		        android:textColor="#000000"
-		        android:alpha="0.5" />
-		    
-		    <LinearLayout
-		        android:id="@+id/upLayer"
-		        android:layout_width="match_parent"
+		        android:textColor="#000000" />
+		    				
+		    <Button
+		        android:id="@+id/btnTextSizeUp"
+		        android:layout_width="50dp"
 		        android:layout_height="wrap_content"
-		        android:gravity="right"
-		        android:orientation="horizontal" >
-				
-			    <Button
-			        android:id="@+id/btnTextSizeUp"
-			        android:layout_width="50dp"
-			        android:layout_height="wrap_content"
-			        android:textSize="20dp"
-			        android:text="+"
-			        android:textColor="#000000"
-			        android:alpha="0.5" />
-			
-			    <Button
-			        android:id="@+id/btnTextSizeDown"
-			        android:layout_width="50dp"
-			        android:layout_height="wrap_content"
-			        android:textSize="20dp"
-			        android:text="-"
-			        android:textColor="#000000"
-			        android:alpha="0.5" />
-		    </LinearLayout>
+		        android:textSize="20dp"
+		        android:text="+"
+		        android:textColor="#000000" />
+		
+		    <Button
+		        android:id="@+id/btnTextSizeDown"
+		        android:layout_width="50dp"
+		        android:layout_height="wrap_content"
+		        android:textSize="20dp"
+		        android:text="-"
+		        android:textColor="#000000" />
 		</LinearLayout>
 	    
 	</FrameLayout>
