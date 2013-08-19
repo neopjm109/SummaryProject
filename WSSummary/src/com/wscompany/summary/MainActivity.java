@@ -23,20 +23,21 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -99,13 +100,12 @@ public class MainActivity extends Activity {
 	// ETC Variables//
 	DownThread mThread;
 	boolean SummaryOn = false;
-
+	
 	//GestureDetector
 	GestureDetector mDetector;
 	final static int DISTANCE = 200;
 	final static int VELOCITY = 300;
-	
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -136,16 +136,12 @@ public class MainActivity extends Activity {
 		menuListView.setOnItemClickListener(itemListener);
 
 		btnSlide = (ImageView) contentsView.findViewById(R.id.BtnSlide);
-
-//		버튼 슬라이드의 리스너 부분... 이곳을 OnGesturelistener를 implement 해서 구형해야 겠다.
-//		btnSlide.setOnClickListener(
-//		new ClickListenerForScrolling(scrollView,menuView, btnSlide));
+		btnSlide.setOnClickListener(new ClickListenerForScrolling(scrollView,
+				menuView, btnSlide));
+		
 		mDetector = new GestureDetector(this, mGestureListener);
-		
-		
+
 		final View[] children = new View[] { menuView, contentsView };
-		
-		
 
 		// Scroll to app (view[1]) when layout finished.
 		int scrollToViewIdx = 1;
@@ -168,15 +164,12 @@ public class MainActivity extends Activity {
 		upLayer = (ViewGroup) contentsView.findViewById(R.id.upLayer);
 
 		pasteContents = (TextView) pasteView.findViewById(R.id.pasteContents);
-		pasteContents.setMovementMethod(new ScrollingMovementMethod());
 
 		webTitle = (TextView) webPageView.findViewById(R.id.webTitle);
 		webContents = (TextView) webPageView.findViewById(R.id.webContents);
-		webContents.setMovementMethod(new ScrollingMovementMethod());
 
 		fileTitle = (TextView) fileView.findViewById(R.id.fileTitle);
 		fileContents = (TextView) fileView.findViewById(R.id.fileContents);
-		fileContents.setMovementMethod(new ScrollingMovementMethod());
 
 		summary = (Button) contentsView.findViewById(R.id.btnSummary);
 		summary.setOnClickListener(sumListener);
@@ -341,7 +334,7 @@ public class MainActivity extends Activity {
 							break;
 						default:
 							Toast.makeText(getApplicationContext(),
-									"더이상 늘일 수 없습니다.", Toast.LENGTH_SHORT).show();
+									"더이상 늘일 수 없습니다.", Toast.LENGTH_SHORT);
 							break;
 						}
 						textSizeCount[1]--;
@@ -415,8 +408,7 @@ public class MainActivity extends Activity {
 				mFileListView = (ListView) findViewById(R.id.load_file_listview);
 				updateFileList();
 				mFileListView.setOnItemClickListener(new OnItemClickListener() {
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 						// TODO Auto-generated method stub
 						switch (position) {
 						case INDEX_GO_ROOT:
@@ -451,12 +443,9 @@ public class MainActivity extends Activity {
 								String fileName = ((IconfiedText) mFileListAdapter
 										.getItem(position)).getText();
 								Intent intent = new Intent();
-								intent.putExtra("file_path",
-										mCurrentDirectory.getPath() + "/"
-												+ fileName);
+								intent.putExtra("file_path", mCurrentDirectory.getPath() + "/" + fileName);
 								setResult(RESULT_OK, intent);
-								String s = mCurrentDirectory.getPath() + "/"
-										+ fileName;
+								String s = mCurrentDirectory.getPath() + "/" + fileName;
 								int c = 0;
 								for (int i = 1; i < s.length() - 1; i++) {
 									if (s.substring(i).contains("/") == true) {
@@ -501,10 +490,8 @@ public class MainActivity extends Activity {
 										fileContents.setText(txt);
 									} catch (Exception exep) {
 									}
-
 								}
 							}
-
 						}
 					}
 				});
@@ -556,43 +543,43 @@ public class MainActivity extends Activity {
 		}
 	};
 
-//	 Sliding Listener 슬라이딩 클릭리스너
-//	static class ClickListenerForScrolling implements OnClickListener {
-//		HorizontalScrollView scrollView;
-//		View menuView;
-//		ImageView btnSlide;
-//
-//		boolean menuOut = false;
-//
-//		public ClickListenerForScrolling(HorizontalScrollView scrollView,
-//				View menuView, ImageView btnSlide) {
-//			super();
-//			this.scrollView = scrollView;
-//			this.menuView = menuView;
-//			this.btnSlide = btnSlide;
-//		}
-//
-//		@Override
-//		public void onClick(View v) {
-//			int menuWidth = menuView.getMeasuredWidth();
-//
-//			// Ensure menu is visible
-//			menuView.setVisibility(View.VISIBLE);
-//
-//			if (!menuOut) {
-//				// Scroll to 0 to reveal menu
-//				int left = 0;
-//				btnSlide.setImageResource(R.drawable.menu0);
-//				scrollView.smoothScrollTo(left, 0);
-//			} else {
-//				// Scroll to menuWidth so menu isn't on screen.
-//				int left = menuWidth;
-//				btnSlide.setImageResource(R.drawable.menu1);
-//				scrollView.smoothScrollTo(left, 0);
-//			}
-//			menuOut = !menuOut;
-//		}
-//	}
+	// Sliding Listener 슬라이딩 클릭리스너
+	static class ClickListenerForScrolling implements OnClickListener {
+		HorizontalScrollView scrollView;
+		View menuView;
+		ImageView btnSlide;
+
+		boolean menuOut = false;
+
+		public ClickListenerForScrolling(HorizontalScrollView scrollView,
+				View menuView, ImageView btnSlide) {
+			super();
+			this.scrollView = scrollView;
+			this.menuView = menuView;
+			this.btnSlide = btnSlide;
+		}
+
+		@Override
+		public void onClick(View v) {
+			int menuWidth = menuView.getMeasuredWidth();
+
+			// Ensure menu is visible
+			menuView.setVisibility(View.VISIBLE);
+
+			if (!menuOut) {
+				// Scroll to 0 to reveal menu
+				int left = 0;
+				btnSlide.setImageResource(R.drawable.menu0);
+				scrollView.smoothScrollTo(left, 0);
+			} else {
+				// Scroll to menuWidth so menu isn't on screen.
+				int left = menuWidth;
+				btnSlide.setImageResource(R.drawable.menu1);
+				scrollView.smoothScrollTo(left, 0);
+			}
+			menuOut = !menuOut;
+		}
+	}
 
 	// Callback Menu 메뉴 콜백 클래스
 	static class SizeCallbackForMenu implements SizeCallback {
@@ -758,14 +745,12 @@ public class MainActivity extends Activity {
 		mFileListAdapter.setListItems(mDirectoryEntries);
 		mFileListView.setAdapter(mFileListAdapter);
 	}
-
+	
 	public boolean onTouchEvent(MotionEvent event) {
 		return mDetector.onTouchEvent(event);
 	}
 	
 	OnGestureListener mGestureListener = new OnGestureListener(){
-
-		
 		@Override
 		public boolean onDown(MotionEvent arg0) {
 			// TODO Auto-generated method stub
