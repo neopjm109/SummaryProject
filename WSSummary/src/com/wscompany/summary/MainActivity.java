@@ -78,8 +78,8 @@ public class MainActivity extends Activity {
 	String[] menu_items = { "붙여넣기", "파일탐색기", "웹페이지", "최근기록", "보관함", "설정" };
 	ImageView btnSlide;
 
-	boolean menuOut = true, pasteOn, fileViewOn, webPageOn, recentOn, storageOn,
-			settingOn, btnLayerOn, m_bFlag = false;
+	boolean menuOut = true, pasteOn, fileViewOn, webPageOn, recentOn,
+			storageOn, settingOn, btnLayerOn, m_bFlag = false;
 	Handler handler = new Handler();
 	Handler m_hHandler;
 	int btnWidth;
@@ -102,8 +102,8 @@ public class MainActivity extends Activity {
 	// ETC Variables//
 	DownThread mThread;
 	boolean SummaryOn = false;
-	
-	//GestureDetector
+
+	// GestureDetector
 	GestureDetector mDetector;
 	final static int DISTANCE = 200;
 	final static int VELOCITY = 300;
@@ -111,15 +111,17 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		startActivity(new Intent(getApplication(), SplashActivity.class));
 
 		context = getApplicationContext();
 		metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		ScreenWidth = metrics.widthPixels / 2;
-		
-		m_hHandler = new Handler(){
-			public void handlemessage(Message msg){
-				if(msg.what == 0){
+
+		m_hHandler = new Handler() {
+			public void handlemessage(Message msg) {
+				if (msg.what == 0) {
 					m_bFlag = false;
 				}
 			}
@@ -130,7 +132,7 @@ public class MainActivity extends Activity {
 		scrollView = (MyHorizontalScrollView) inflater.inflate(
 				R.layout.activity_main, null);
 		setContentView(scrollView);
-		
+
 		// ViewGroup initialize
 		ViewGroupInit();
 		VisibilityInvisible();
@@ -147,7 +149,7 @@ public class MainActivity extends Activity {
 
 		btnSlide = (ImageView) contentsView.findViewById(R.id.BtnSlide);
 		btnSlide.setOnClickListener(new OnClickListener() {
-			
+
 			public void onClick(View v) {
 				int menuWidth = menuView.getMeasuredWidth();
 				// Ensure menu is visible
@@ -165,7 +167,7 @@ public class MainActivity extends Activity {
 				menuOut = !menuOut;
 			}
 		});
-		
+
 		mDetector = new GestureDetector(this, mGestureListener);
 
 		final View[] children = new View[] { menuView, contentsView };
@@ -407,7 +409,7 @@ public class MainActivity extends Activity {
 			btnSlide.setImageResource(R.drawable.menu1);
 			scrollView.smoothScrollTo(menuWidth, 0);
 			menuOut = !menuOut;
-			
+
 			switch (pos) {
 			case 0: // 붙여넣기
 				indexView.setVisibility(View.INVISIBLE);
@@ -419,8 +421,10 @@ public class MainActivity extends Activity {
 						.getSystemService(Context.CLIPBOARD_SERVICE);
 				ClipData clip = clipboard.getPrimaryClip();
 
-				beforeSummary = clip.getItemAt(0)
-						.coerceToText(getApplicationContext()).toString();
+				if (clip.getItemAt(0).coerceToText(getApplicationContext())
+						.toString() != null)
+					beforeSummary = clip.getItemAt(0)
+							.coerceToText(getApplicationContext()).toString();
 				pasteContents.setText(beforeSummary);
 
 				break;
@@ -437,7 +441,8 @@ public class MainActivity extends Activity {
 				mFileListView = (ListView) findViewById(R.id.load_file_listview);
 				updateFileList();
 				mFileListView.setOnItemClickListener(new OnItemClickListener() {
-					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
 						switch (position) {
 						case INDEX_GO_ROOT:
 							String ext = Environment.getExternalStorageState();
@@ -471,9 +476,12 @@ public class MainActivity extends Activity {
 								String fileName = ((IconfiedText) mFileListAdapter
 										.getItem(position)).getText();
 								Intent intent = new Intent();
-								intent.putExtra("file_path", mCurrentDirectory.getPath() + "/" + fileName);
+								intent.putExtra("file_path",
+										mCurrentDirectory.getPath() + "/"
+												+ fileName);
 								setResult(RESULT_OK, intent);
-								String s = mCurrentDirectory.getPath() + "/" + fileName;
+								String s = mCurrentDirectory.getPath() + "/"
+										+ fileName;
 								int c = 0;
 								for (int i = 1; i < s.length() - 1; i++) {
 									if (s.substring(i).contains("/") == true) {
@@ -572,7 +580,7 @@ public class MainActivity extends Activity {
 			}
 		}
 	};
-	
+
 	// Callback Menu 메뉴 콜백 클래스
 	static class SizeCallbackForMenu implements SizeCallback {
 		int btnWidth;
@@ -627,7 +635,7 @@ public class MainActivity extends Activity {
 				beforeSummary = mThread.mResult;
 				titleSummary = WHtmlParser.GetTitle(beforeSummary);
 				beforeSummary = WHtmlParser.RemoveTag(beforeSummary);
-				webContents.setText(titleSummary+"\n"+beforeSummary);
+				webContents.setText(titleSummary + "\n" + beforeSummary);
 				indexView.setVisibility(View.INVISIBLE);
 				webPageView.setVisibility(View.VISIBLE);
 				btnLayer.setVisibility(View.VISIBLE);
@@ -735,51 +743,55 @@ public class MainActivity extends Activity {
 		mFileListAdapter.setListItems(mDirectoryEntries);
 		mFileListView.setAdapter(mFileListAdapter);
 	}
-	
-	// 뒤로버튼 기능
-	public boolean onKeyDown(int KeyCode, KeyEvent event){
-		if(event.getAction() == KeyEvent.ACTION_DOWN) {
-			switch(KeyCode) {
-			case KeyEvent.KEYCODE_BACK:	// `뒤로` 키와 같은 기능을 한다.
-				if(menuOut){
-					new AlertDialog.Builder(this).setTitle("종료").setMessage("종료하시겠습니까?")
-					.setPositiveButton("확인",
-							new DialogInterface.OnClickListener() {
 
-								public void onClick(DialogInterface dialog,
-										int which) {
-									finish();
-								}
-							})
-					.setNegativeButton("취소",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int which) {
-								}
-							}).show();
-				}else{
-					if(fileViewOn){
+	// 뒤로버튼 기능
+	public boolean onKeyDown(int KeyCode, KeyEvent event) {
+		if (event.getAction() == KeyEvent.ACTION_DOWN) {
+			switch (KeyCode) {
+			case KeyEvent.KEYCODE_BACK: // `뒤로` 키와 같은 기능을 한다.
+				if (menuOut) {
+					new AlertDialog.Builder(this)
+							.setTitle("종료")
+							.setMessage("종료하시겠습니까?")
+							.setPositiveButton("확인",
+									new DialogInterface.OnClickListener() {
+
+										public void onClick(
+												DialogInterface dialog,
+												int which) {
+											finish();
+										}
+									})
+							.setNegativeButton("취소",
+									new DialogInterface.OnClickListener() {
+										public void onClick(
+												DialogInterface dialog,
+												int which) {
+										}
+									}).show();
+				} else {
+					if (fileViewOn) {
 						fileView.setVisibility(View.INVISIBLE);
 						btnLayer.setVisibility(View.INVISIBLE);
 						fileLoaderView.setVisibility(View.VISIBLE);
 						fileViewOn = btnLayerOn = false;
-					}else{
+					} else {
 						int left = 0;
 						btnSlide.setImageResource(R.drawable.menu0);
 						scrollView.smoothScrollTo(left, 0);
-						menuOut = !menuOut;	
+						menuOut = !menuOut;
 					}
 				}
 			}
 		}
 		return true;
 	}
-	
+
 	public boolean onTouchEvent(MotionEvent event) {
 		return mDetector.onTouchEvent(event);
 	}
-	
-	OnGestureListener mGestureListener = new OnGestureListener(){
+
+	OnGestureListener mGestureListener = new OnGestureListener() {
 		@Override
 		public boolean onDown(MotionEvent arg0) {
 			// TODO Auto-generated method stub
@@ -789,38 +801,42 @@ public class MainActivity extends Activity {
 		@Override
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 				float velocityY) {
-			if(Math.abs(velocityX) > VELOCITY){
+			if (Math.abs(velocityX) > VELOCITY) {
 				int menuWidth = 0;
 				// 메뉴 넣기
-				if(e1.getX() - e2.getX() > DISTANCE){
+				if (e1.getX() - e2.getX() > DISTANCE) {
 					menuWidth = menuView.getMeasuredWidth();
 					btnSlide.setImageResource(R.drawable.menu1);
 					scrollView.smoothScrollTo(menuWidth, 0);
 				}
 				// 메뉴 꺼내기
-				if(e2.getX() - e1.getX() > DISTANCE){
+				if (e2.getX() - e1.getX() > DISTANCE) {
 					// Ensure menu is visible
 					menuView.setVisibility(View.VISIBLE);
 					// Scroll to menuWidth so menu isn't on screen.
 					btnSlide.setImageResource(R.drawable.menu0);
 					scrollView.smoothScrollTo(menuWidth, 0);
 				}
-			}	
+			}
 			return false;
 		}
+
 		public void onLongPress(MotionEvent e) {
-			
+
 		}
+
 		public boolean onScroll(MotionEvent e1, MotionEvent e2,
 				float distanceX, float distanceY) {
 			return false;
 		}
+
 		public void onShowPress(MotionEvent e) {
-			
+
 		}
+
 		public boolean onSingleTapUp(MotionEvent e) {
 			return false;
 		}
 	};
-	
+
 }

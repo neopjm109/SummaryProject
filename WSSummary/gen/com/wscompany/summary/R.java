@@ -72,6 +72,7 @@ public final class R {
         public static final int load_file_list_item=0x7f030004;
         public static final int load_popup=0x7f030005;
         public static final int right_contents=0x7f030006;
+        public static final int splash=0x7f030007;
     }
     public static final class menu {
         public static final int main=0x7f070000;

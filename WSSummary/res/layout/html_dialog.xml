@@ -7,7 +7,7 @@
     
     <EditText
         android:id="@+id/htmlEdit"
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:hint="웹주소를 복사해주세요"
         android:textColor="#FFFFFF"
